@@ -140,3 +140,21 @@ for submission in submissions:
 import regex
 help(regex.search)    
 #see here https://pypi.python.org/pypi/regex
+
+string = "I hate Hillary but I also ate icecream and I also eigth"
+
+match = regex.search(".te", string)
+
+match_all = regex.findall(".te", string)
+
+help(match)
+match.captures() #gives you what have matched
+match.capturesdict() #gives you what have matched
+
+match_all
+
+
+testString = 'some phrase'
+r = regex.compile('('+testString+'){e<=5}')
+#print all popular subreddits
+aa = test_reddit.subreddits.popular()
