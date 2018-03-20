@@ -21,26 +21,37 @@ test_reddit = pw.Reddit(client_id=client_id,
                      username = username,
                      password = pwd)
 
-list_of_submission = [submission for submission in test_reddit.subreddit("italy").hot(limit = 10)]    
+
 
 #for the moment it only take the top submission
 def create_list_of_submission_from_subreddit(reddit_instance,subreddit):
-    list_of_submission = [submission for submission in reddit_instance.subreddit(subreddit).top()]
+    list_of_submission = [submission for submission in reddit_instance.subreddit(subreddit).hot(limit = 20)]
     return list_of_submission
 
-#create a dictionary that has the titles as keys an list composed
-#of main body + comment
-def from_sub_to_list(reddit_instance):
+#create a list that has every entry (title, body, comments) of every post
+def from_sub_to_list(list_of_submission):
     final_result = []  
     for submission in list_of_submission:
-        local_list = []
-        local_list.append(submission.title)
-        local_list.append(submission.selftext)
+        final_result.append(submission.title)
+        final_result.append(submission.selftext)
         submission.comments.replace_more(limit = None)
         for comment in submission.comments.list():
-            local_list.append(comment.body)
-        final_result.append(local_list)
+            final_result.append(comment.body)
     return final_result
-#look into regex for fuzzy matching
+
+    
+#here to debug
 import regex
-help(regex.search)    
+def count_swear_words_in_text(text, swear_words_list, error = "{e<=1}"):
+    n_swear = [regex.match("(?:" + swear_word + ")" + error, word.lower()) for swear_word
+         in swear_words_list for word in text.split()]
+    return(n_swear)
+
+
+
+import regex
+def count_swear_words_in_text(text, swear_words_list, error = "{e<=1}"):
+    n_swear = sum([bool(regex.match("(?:" + swear_word + ")" + error, word)) for swear_word
+         in swear_words_list for word in text.split()])
+    return(n_swear)
+    

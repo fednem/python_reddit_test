@@ -141,6 +141,8 @@ import regex
 help(regex.search)    
 #see here https://pypi.python.org/pypi/regex
 
+regex.fullmatch(r"(?:cats|cat){e}", "cat poo sat")
+
 string = "I hate Hillary but I also ate icecream and I also eigth"
 
 match = regex.search(".te", string)
@@ -156,5 +158,65 @@ match_all
 
 testString = 'some phrase'
 r = regex.compile('('+testString+'){e<=5}')
+r
 #print all popular subreddits
 aa = test_reddit.subreddits.popular()
+
+
+
+my_phrase = "I want to find a match for some words in the world"
+my_list = ["not", "match", "wor"]
+#look at the difference between these lines
+[word in my_phrase.split() for word in my_list]
+[word in my_phrase for word in my_list]
+
+[word + "ld" in my_phrase for word in my_list]
+
+[word + "ld" in my_phrase for word in my_list]
+
+
+bool(regex.match("foo{e}","fo of mo"))
+bool(regex.match("foo","fo"))
+
+regex.match("fo{e}","fo of mo")
+regex.match(".*fuck.*","I want to fock bitch bitching batch loss b*itch fuck")
+
+
+
+
+my_phrase = "I want to fuck fick fock bitch bitching batch loss b*itch"
+my_list = ["fuck", "bitch", "wor"]
+
+
+[medium_item + " " + leftmost_item for medium_item in my_list for leftmost_item in my_phrase.split()]
+
+[medium_item + " " + my_phrase for medium_item in my_list]
+
+#this does not throw error but does not work either
+[regex.match(medium_item + "{e}", my_phrase) for medium_item in my_list]
+
+[print("regex.match(" + medium_item + "{e}" + "," + my_phrase + ")") for medium_item in my_list]
+
+
+[print (word + " " + bit), [bit for bit in my_phrase.split()] for word in my_list]
+
+[bool(regex.match(word + "{e}", [bit for bit in my_phrase.split()])) for word in my_list]
+
+
+
+##WORKING
+[regex.match("fuck", word) for word in "I want to fock bitch bitching batch loss b*itch fuck".split()]
+[regex.match("(?:fuck){e<=1}", word) for word in "I want to fock bitch bitching batch loss b*itch fuck fck fk filk f*ck f**k".split()]
+[regex.match("(?:fuck){s<=1}", word) for word in "I want to fock bitch bitching batch loss b*itch fuck".split()]
+[regex.match("(?:fuck){i<=1}", word) for word in "I want to fock bitch bitching batch loss b*itch fuck".split()]
+[regex.match("(?:fuck){d<=1}", word) for word in "I want to fock bitch bitching batch loss b*itch fuck fck".split()]
+sum([bool(regex.match("(?:fuck){d<=1}", word)) for word in "I want to fock bitch bitching batch loss b*itch fuck fck".split()])
+
+#####it works !!!!!!
+my_swear_list = ["fuck", "bitch"]
+my_phrase = "I want to fock bitch bitching batch loss b*itch fuck fck fk filk f*ck f**k fuuck fuuuuuuuuuck"
+[(my_swear,regex.match("(?:" + my_swear + "){e<=1}", word)) for my_swear in my_swear_list for word in my_phrase.split()]
+#try to tune the error
+sum([bool(regex.match("(?:" + my_swear + "){i<=3,d<=1,s<=1}", word)) for my_swear in my_swear_list for word in my_phrase.split()])
+#good !
+#make a function out of this

@@ -23,4 +23,33 @@ test_reddit = pw.Reddit(client_id=client_id,
 
 the_donald_subs = create_list_of_submission_from_subreddit(test_reddit, "the_donald")
 
-the_donald_list = from_sub_to_list(the_donald_subs)
+
+my_swear_list = ["fuck", "bitch"]
+my_phrase = "I want to fock bitch bitching batch loss b*itch fuck fck fk filk f*ck f**k fuuck fuuuuuuuuuck"
+
+count_swear_words_in_text(my_phrase, my_swear_list)
+
+
+#check if it works good
+for i,t in enumerate(the_donald_list):
+    print(str(i) + " " + t)    
+
+my_swear_list = ["fuck", "bitch", "hell", "faggot", "cunt", "dick", "prick", "ass", "asshole", "fucking", "crap"]    
+test_list = [the_donald_list[i] for i in (1087,1090,1918,1919)]
+
+match = []
+for text in test_list:
+    local_count = count_swear_words_in_text(text, my_swear_list, error = "{e<=1}")
+    match.append(local_count)
+
+from itertools import chain
+
+[element for element in chain(*match) if bool(element)]
+
+
+total_count = 0
+for text in the_donald_list:
+    local_count = count_swear_words_in_text(text, my_swear_list)
+    total_count = total_count + local_count
+        
+
