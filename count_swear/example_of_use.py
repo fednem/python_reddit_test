@@ -23,12 +23,14 @@ test_reddit = pw.Reddit(client_id=client_id,
 
 the_donald_subs = create_list_of_submission_from_subreddit(test_reddit, "the_donald")
 
+the_donald_list = from_sub_to_list(the_donald_subs)
 
-my_swear_list = ["fuck", "bitch"]
-my_phrase = "I want to fock bitch bitching batch loss b*itch fuck fck fk filk f*ck f**k fuuck fuuuuuuuuuck"
 
-count_swear_words_in_text(my_phrase, my_swear_list)
+# Saving the list for benchmarking:
+import pickle
 
+with open('the_donald_list_20032018.pkl', 'wb') as f:  
+    pickle.dump([the_donald_list], f)
 
 #check if it works good
 for i,t in enumerate(the_donald_list):
